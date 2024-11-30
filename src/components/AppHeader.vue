@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar style="padding: 0 90px" color="white" elevation="0" scroll-behavior="elevate">
+    <v-app-bar style="padding: 0 90px" color="white" elevation="1" scroll-behavior="elevate">
         <v-toolbar-title>Dawid Haniewicz</v-toolbar-title>
         <v-spacer />
         <v-list class="d-flex align-center">
@@ -25,8 +25,8 @@ const links = reactive([
         route: '/about-me',
     },
     {
-        title: 'Experience',
-        route: '/experience',
+        title: 'Education and Work',
+        route: '/education-and-work',
     },
     {
         title: 'Stack',
