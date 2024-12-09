@@ -3,6 +3,7 @@
         <v-dialog v-model="dialog" max-width="600" persistent>
             <template v-slot:activator="{ props: activatorProps }">
                 <v-btn
+                    flat
                     class="text-none font-weight-regular"
                     prepend-icon="mdi-at"
                     text="Contact Me"

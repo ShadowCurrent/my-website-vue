@@ -3,11 +3,17 @@
         <v-toolbar-title>Dawid Haniewicz</v-toolbar-title>
         <v-spacer />
         <v-list class="d-flex align-center">
-            <v-list-item link v-for="(menu, idx) in links" :key="idx" :to="menu.route">
+            <v-list-item
+                density="compact"
+                link
+                v-for="(menu, idx) in links"
+                :key="idx"
+                :to="menu.route"
+            >
                 <v-list-item-title>{{ menu.title }}</v-list-item-title>
             </v-list-item>
         </v-list>
-        <contact-me/>
+        <contact-me />
     </v-app-bar>
 </template>
 
