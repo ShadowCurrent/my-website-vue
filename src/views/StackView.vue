@@ -1,22 +1,34 @@
 <template>
-    <v-container fluid>
+    <v-container fluid class="w-75">
         <!-- Backend Section -->
-        <v-row>
+        <v-row align="center" justify="center">
             <v-col cols="12">
                 <h3>Backend</h3>
             </v-col>
 
             <!-- Each item in the backend stack -->
-            <v-col v-for="(tech, index) in backendStack" :key="index" cols="2" md="2">
-                <v-card class="d-flex flex-column align-center pa-3">
-                    <v-icon size="40">{{ tech.icon }}</v-icon>
-                    <span>{{ tech.name }}</span>
-                </v-card>
+            <v-col v-for="(card, index) in backendStack" :key="index" cols="2" md="2">
+                <transition name="flip">
+                    <v-card
+                        @click="flipCard(card)"
+                        class="d-flex flex-column align-center pa-3"
+                        :ripple="false"
+                    >
+                        <p v-if="!card.flipped" key="1">
+                            <v-icon size="40">{{ card.icon }}</v-icon>
+                            <span>{{ card.text }}</span>
+                        </p>
+
+                        <p v-else key="2">
+                            <span>{{ card.flippedText }}</span>
+                        </p>
+                    </v-card>
+                </transition>
             </v-col>
         </v-row>
 
         <!-- Frontend Section -->
-        <v-row>
+        <v-row align="center" justify="center">
             <v-col cols="12">
                 <h3>Frontend</h3>
             </v-col>
@@ -25,13 +37,13 @@
             <v-col v-for="(tech, index) in frontendStack" :key="index" cols="2" md="2">
                 <v-card class="d-flex flex-column align-center pa-3">
                     <v-icon size="40">{{ tech.icon }}</v-icon>
-                    <span>{{ tech.name }}</span>
+                    <span>{{ tech.text }}</span>
                 </v-card>
             </v-col>
         </v-row>
 
         <!-- DevOps Section -->
-        <v-row>
+        <v-row align="center" justify="center">
             <v-col cols="12">
                 <h3>DevOps</h3>
             </v-col>
@@ -40,7 +52,7 @@
             <v-col v-for="(tech, index) in devOpsStack" :key="index" cols="2" md="2">
                 <v-card class="d-flex flex-column align-center pa-3">
                     <v-icon size="40">{{ tech.icon }}</v-icon>
-                    <span>{{ tech.name }}</span>
+                    <span>{{ tech.text }}</span>
                 </v-card>
             </v-col>
         </v-row>
@@ -48,28 +60,39 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { reactive } from 'vue'
+
+interface Card {
+    text: string
+    flippedText: string
+    icon: string
+    flipped?: boolean
+}
 
 // Define your tech stack categories with names and Vuetify icons or custom icons
-const backendStack = ref([
-    { name: 'Java', icon: 'mdi-language-java' },
-    { name: 'Spring Boot', icon: 'mdi-spring' },
-    { name: 'PostgreSQL', icon: 'mdi-database' },
-    { name: 'MongoDB', icon: 'mdi-leaf' },
+const backendStack: Card[] = reactive([
+    { text: 'Java', flipped: false, flippedText: '5+ years', icon: 'mdi-language-java' },
+    { text: 'Spring Boot', flippedText: '4 years', icon: 'mdi-spring' },
+    { text: 'PostgreSQL', flippedText: '3 years', icon: 'mdi-database' },
+    { text: 'MongoDB', flippedText: '1 year', icon: 'mdi-leaf' },
 ])
 
-const frontendStack = ref([
-    { name: 'VueJS', icon: 'mdi-vuejs' },
-    { name: 'Angular', icon: 'mdi-angular' },
-    { name: 'JavaScript', icon: 'mdi-language-javascript' },
-    { name: 'TypeScript', icon: 'mdi-language-typescript' },
+const frontendStack: Card[] = reactive([
+    { text: 'VueJS', flippedText: '2 years', icon: 'mdi-vuejs' },
+    { text: 'Angular', flippedText: '2 year', icon: 'mdi-angular' },
+    { text: 'JavaScript', flippedText: '3 years', icon: 'mdi-language-javascript' },
+    { text: 'TypeScript', flippedText: '3 years', icon: 'mdi-language-typescript' },
 ])
 
-const devOpsStack = ref([
-    { name: 'Docker', icon: 'mdi-docker' },
-    { name: 'GitLab CI', icon: 'mdi-gitlab' },
-    { name: 'Jenkins', icon: 'mdi-jenkins' },
+const devOpsStack: Card[] = reactive([
+    { text: 'Docker', flippedText: '4 years', icon: 'mdi-docker' },
+    { text: 'GitLab CI', flippedText: '3 years', icon: 'mdi-gitlab' },
+    { text: 'Jenkins', flippedText: '1 year', icon: 'mdi-jenkins' },
 ])
+
+function flipCard(card: Card) {
+    card.flipped = !card.flipped
+}
 </script>
 
 <style scoped>
@@ -79,11 +102,14 @@ h3 {
     font-weight: bold;
 }
 
-.v-card {
-    transition: box-shadow 0.3s ease;
+.flip-enter-active,
+.flip-leave-active {
+    transition: all 0.5s ease;
 }
 
-.v-card:hover {
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+.flip-enter-from,
+.flip-leave-to {
+    transform: rotateY(180deg);
+    opacity: 0;
 }
 </style>
